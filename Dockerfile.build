@@ -1,0 +1,12 @@
+# Reproducible build: cross-compile the tiny Go web server, then layer it on
+# top of the ARMv7 Ookla container.
+FROM golang:1.23-bookworm AS builder
+WORKDIR /src
+COPY main.go .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm GOARM=7 go build -trimpath -ldflags="-s -w" -o /out/speedtest-web-armv7 main.go
+
+FROM --platform=linux/arm/v7 lferrarotti74/speedtest-ookla:latest
+COPY --from=builder --chown=speedtest:speedtest /out/speedtest-web-armv7 /usr/local/bin/speedtest-web
+EXPOSE 8080
+ENV PORT=8080 TEST_TIMEOUT_SECONDS=180
+ENTRYPOINT ["/usr/local/bin/speedtest-web"]

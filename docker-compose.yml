@@ -1,0 +1,8 @@
+services:
+  jayd-speedtest:
+    build: .
+    image: jayd-speedtest-web:armv7
+    container_name: jayd-speedtest
+    restart: unless-stopped
+    ports:
+      - "8766:8080"
