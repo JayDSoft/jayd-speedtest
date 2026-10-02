@@ -10,6 +10,7 @@ Designed for Sonoff iHost / eWeLink CUBE and other `linux/arm/v7` Docker hosts.
 - Lightweight single-binary Go web UI
 - Official Ookla Speedtest CLI
 - Progress bar and current test stage
+- Previous results are dimmed while a new measurement is running
 - English and Russian interface
 
 ## Ports
